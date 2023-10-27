@@ -1,0 +1,286 @@
+from tkinter import*
+from tkinter import ttk
+
+import mysql.connector
+from tkinter import messagebox
+
+class RailwayManagementSystem:
+    def __init__(self, root):
+        self.root = root 
+        self.root.title("Railway Management System")
+        self.root.geometry("1550x800+0+0")
+        
+        #============================================variable===========================================
+        
+        self.trainname_var = StringVar()
+        self.trainno_var = StringVar()
+        self.class_var = StringVar()
+        self.date_var = StringVar()
+        self.time_var = StringVar()
+        self.sourcestation_var = StringVar()
+        self.destinationstation_var = StringVar()
+        self.distance_var = StringVar()
+        self.quota_var = StringVar()
+        self.bookingdate_var = StringVar()
+        self.passengername_var = StringVar()
+        self.age_var = StringVar()
+        self.gender_var = StringVar()
+        self.passengerid_var = StringVar()
+        
+  
+        lbltitle=Label(self.root,text="RAILWAY MANAGEMENT SYSTEM",bg="powder blue",fg="green",bd=20,relief=RIDGE,font=("times new roman",50,"bold"),padx=2,pady=6)
+        lbltitle.pack(side="top", fill="x")
+        
+        frame=Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
+        frame.place(x=0,y=130,width=1530,height=400)
+        #=================================================DataFrame Left=======================================================
+        DataFrameLeft=LabelFrame(frame,text="Booking Details",bg="powder blue",fg="green",bd=12,relief=RIDGE,font=("times new roman",12,"bold"))
+        DataFrameLeft.place(x=0,y=5,width=900,height=350)
+       
+        lblTrain = Label(DataFrameLeft, bg="powder blue", text="Train Name", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblTrain.grid(row=0, column=0, sticky="w")
+        
+        txtTrain_Name=Entry(DataFrameLeft, textvariable=self.trainname_var,font=("times new roman", 15, "bold"), width=27)
+        txtTrain_Name.grid(row=0, column=1)
+
+        lblTrain = Label(DataFrameLeft, bg="powder blue", text="Train No", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblTrain.grid(row=1, column=0, sticky="w")
+        
+        txtTrain_No=Entry(DataFrameLeft,textvariable=self.trainno_var ,font=("times new roman", 15, "bold"), width=27)
+        txtTrain_No.grid(row=1,column=1)
+
+        lblClass= Label(DataFrameLeft, bg="powder blue", text="Class", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblClass.grid(row=2,column=0, sticky="w") 
+        
+        comClass=ttk.Combobox(DataFrameLeft,textvariable=self.class_var, font=("times new roman", 15, "bold"), width=25,state="Readonly")
+        comClass["value"]=("1A=First class AC","2A=2 tier AC Sleeper","3A=3Tier AC Sleeper","CC=chair car","FC=First class","SL=sleeper class","2S=Second class seat")
+        comClass.grid(row=2,column=1)
+         
+        lblDate= Label(DataFrameLeft, bg="powder blue", text="Date", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblDate.grid(row=3, column=0, sticky="w")
+        
+        txtDate=Entry(DataFrameLeft,textvariable=self.date_var ,font=("times new roman", 15, "bold"), width=27)
+        txtDate.grid(row=3, column=1)
+        
+        lblTime = Label(DataFrameLeft, bg="powder blue", text="Time", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblTime.grid(row=4, column=0, sticky="w")
+        
+        txtTime=Entry(DataFrameLeft,textvariable=self.time_var, font=("times new roman", 15, "bold"), width=27)
+        txtTime.grid(row=4, column=1)
+    
+        lblSource_station = Label(DataFrameLeft, bg="powder blue", text="Source Station", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblSource_station.grid(row=5, column=0, sticky="w")
+        
+        txtSource_station=Entry(DataFrameLeft, textvariable=self.sourcestation_var ,font=("times new roman", 15, "bold"), width=27)
+        txtSource_station.grid(row=5, column=1)
+        
+        lblDestination_station = Label(DataFrameLeft, bg="powder blue", text="Destination Station", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblDestination_station.grid(row=6, column=0, sticky="w")
+        
+        txtDestination_station=Entry(DataFrameLeft,textvariable=self.destinationstation_var, font=("times new roman", 15, "bold"), width=27)
+        txtDestination_station.grid(row=6, column=1)
+        
+        lblDistance = Label(DataFrameLeft, bg="powder blue", text="Distance", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblDistance.grid(row=7, column=0, sticky="w")
+        
+        txtDistance=Entry(DataFrameLeft,textvariable=self.distance_var, font=("times new roman", 15, "bold"), width=27)
+        txtDistance.grid(row=7, column=1)
+        
+        lblQuota= Label(DataFrameLeft, bg="powder blue", text="Quota", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblQuota.grid(row=0,column=2, sticky="w") 
+        
+        comQuota=ttk.Combobox(DataFrameLeft,textvariable=self.quota_var ,font=("times new roman", 15, "bold"), width=25,state="Readonly")
+        comQuota["value"]=("1. GN=General Quota","2. LD=Ladies Quota","3. HO=Head quarters/high official Quota","4. DF=Defence Quota","5. PH= Parliament house Quota","6. FT=Foreign Tourist Quota","7. DP=Duty Pass Quota","8. TQ=Tatkal Quota","9. PT=Premium Tatkal Quota","10. SS= Female(above 45 Year)/Senior Citizen/Travelling alone" ,"11. HP=Physically Handicapped Quota ","12. RE= Railway Employee Staff on Duty for the train ","13. GNRS=General Quota Road Side ","14. OS= Out Station"
+                            ,"15. PQ=Pooled Quota","16. RC(RAC)= Reservation Against Cancellation","17. RS=Road Side","18. YU=Yuva","19. LB=Lower Berth")
+        comQuota.grid(row=0,column=3)
+
+
+        lblBooking_date= Label(DataFrameLeft, bg="powder blue", text="Booking date", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblBooking_date.grid(row=1,column=2, sticky="w") 
+        
+        txtBooking_date=Entry(DataFrameLeft,textvariable=self.bookingdate_var, font=("times new roman", 15, "bold"), width=27)
+        txtBooking_date.grid(row=1, column=3)
+        
+        lblPassenger_Name=Label(DataFrameLeft, bg="powder blue", text="Passenger Name", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblPassenger_Name.grid(row=2,column=2, sticky="w") 
+        
+        txtPassenge_Name=Entry(DataFrameLeft,textvariable=self.passengername_var, font=("times new roman", 15, "bold"), width=27)
+        txtPassenge_Name.grid(row=2, column=3)
+        
+ 
+        lblAge= Label(DataFrameLeft, bg="powder blue", text="Age", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblAge.grid(row=3,column=2, sticky="w") 
+        
+        txtAge=Entry(DataFrameLeft, textvariable=self.age_var,font=("times new roman", 15, "bold"), width=27)
+        txtAge.grid(row=3, column=3)
+        
+        lblGender= Label(DataFrameLeft, bg="powder blue", text="Gender", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblGender.grid(row=4,column=2, sticky="w") 
+        
+        comGender=ttk.Combobox(DataFrameLeft,  textvariable=self.gender_var,font=("times new roman", 15, "bold"), width=25,state="Readonly")
+        comGender["value"]=("MALE","FEMALE","OTHERS")
+        comGender.grid(row=4,column=3)
+         
+        lblPassenger_ID= Label(DataFrameLeft,textvariable=self.passengerid_var, bg="powder blue", text="Passenger ID", font=("times new roman", 15, "bold"), padx=2, pady=6)
+        lblPassenger_ID.grid(row=5,column=2, sticky="w") 
+        
+        txtPassenger_ID=Entry(DataFrameLeft, font=("times new roman", 15, "bold"), width=27)
+        txtPassenger_ID.grid(row=5, column=3)
+        
+        #============================================Passenger Information======================================================
+       
+        DataFrameright=LabelFrame(frame,text="Train Details",bg="powder blue",fg="green",bd=12,relief=RIDGE,font=("times new roman",12,"bold"))
+        DataFrameright.place(x=910,y=5,width=540,height=350)
+        
+        ListScrollbar=Scrollbar(DataFrameright)
+        ListScrollbar.grid(row=0,column=1,sticky="ns")
+        
+        Listtrains=['Suryanagri express','ADI Howrah Express','Golden Temple Mail','Ashram Express','Paschim Express','Karnavati Express','MMCT Jaipur Express','Sabarmati Express','Sabarmati Express','Tapti Ganga Express','BDTS Ghaziapur Express','Azimabad Express','Avadh Express','Avadh Express','Gujrat Samprak Kranti','Special Train Via Surat','Maitree Express IR','Bandhan Express','Ananya Express','Akal Takht Express','Gwalior kolkata Super Fast Express','Agartala Kolkata Special','Malda Town Howrah Intercity Express']
+        
+        def Selecttrain(event=""):
+            value=str(ListBox.get(ListBox.curselection()))
+            x=value 
+            if (x=="Suryanagri express"):
+                self.trainno_var.set("09876")
+                self.trainname_var.set("Suryanagri express")
+        
+        ListBox=Listbox(DataFrameright,font=("arial", 12, "bold"), width=22,height=16)
+        ListBox.bind("<<ListboxSelect>>",Selecttrain)
+        ListBox.grid(row=0,column=0,padx=4)
+        ListScrollbar.config(command=ListBox.yview) 
+        
+        for item in Listtrains:
+            ListBox.insert(END,item)
+        
+        
+        #==================================================Buttons Frame========================================================
+        FrameButton=Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
+        FrameButton.place(x=0,y=530,width=1530,height=70)
+        
+        btnAddData = Button(FrameButton,command=self.adda_data, text="Add data", font=("arial", 12, "bold"), width=23, bg="#006400", fg="white")
+        btnAddData.grid(row=0, column=0)
+ 
+        btnAddData = Button(FrameButton, text="Show Data", font=("arial", 12, "bold"), width=23, bg="#006400", fg="white")
+        btnAddData.grid(row=0, column=1)
+
+        btnAddData = Button(FrameButton, text="update", font=("arial", 12, "bold"), width=23, bg="#006400", fg="white")
+        btnAddData.grid(row=0, column=2)
+        
+        btnAddData = Button(FrameButton, text="Delete", font=("arial", 12, "bold"), width=23, bg="#006400", fg="white")
+        btnAddData.grid(row=0, column=3)
+        
+        btnAddData = Button(FrameButton, text="Reset", font=("arial", 12, "bold"), width=23, bg="#006400", fg="white")
+        btnAddData.grid(row=0, column=4)
+        
+        btnAddData = Button(FrameButton, text="Exit", font=("arial", 12, "bold"), width=23, bg="#006400", fg="white")
+        btnAddData.grid(row=0, column=5)
+        #==================================================Informantion Frame===================================================
+        Framedetails=Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
+        Framedetails.place(x=0,y=600,width=1530,height=195)
+        
+        Table_frame=Frame(Framedetails,bd= 6,relief=RIDGE,bg="powder blue")
+        Table_frame.place(x = 0 ,y = 2 ,width = 1460, height= 170)
+        
+        xscroll=ttk.Scrollbar(Table_frame,orient=HORIZONTAL)                  
+        yscroll=ttk.Scrollbar(Table_frame,orient=VERTICAL) 
+        self.Railway_table=ttk.Treeview(Table_frame,columns=("trainname","trainno","class","date","time","sourcestation","destinationstation","distance","quota","bookingdate","passengername","age","gender","passengerid"))
+        self.Railway_table['xscrollcommand'] = xscroll.set
+        self.Railway_table['yscrollcommand'] = yscroll.set
+        xscroll.pack(side=BOTTOM,fill=X)
+        yscroll.pack(side=RIGHT,fill=Y)
+        xscroll.config(command=self.Railway_table.xview)
+        yscroll.config(command=self.Railway_table.yview)
+        
+        self.Railway_table.heading("trainname",text="Train Name")
+        self.Railway_table.heading("trainno",text="Train No")
+        self.Railway_table.heading("class",text="Class")
+        self.Railway_table.heading("date",text="Date")
+        self.Railway_table.heading("time",text="Time")
+        self.Railway_table.heading("sourcestation",text="Source Station")
+        self.Railway_table.heading("destinationstation",text="Destination Station")
+        self.Railway_table.heading("distance",text="Distance")
+        self.Railway_table.heading("quota",text="Quota")
+        self.Railway_table.heading("bookingdate",text="Booking date")
+        self.Railway_table.heading("passengername",text="Passenger Name")
+        self.Railway_table.heading("age",text="Age")
+        self.Railway_table.heading("gender",text="Gender")
+        self.Railway_table.heading("passengerid",text="Passenger ID")
+        
+        
+        
+        self.Railway_table["show"] = "headings"
+        self.Railway_table.pack(fill=BOTH,expand=1)
+        
+        self.Railway_table.column("trainname",width=100)
+        self.Railway_table.column("trainno",width=100)
+        self.Railway_table.column("class",width=100)
+        self.Railway_table.column("date",width=100)
+        self.Railway_table.column("time",width=100)
+        self.Railway_table.column("sourcestation",width=100)
+        self.Railway_table.column("destinationstation",width=100)
+        self.Railway_table.column("distance",width=100)
+        self.Railway_table.column("quota",width=100)
+        self.Railway_table.column("bookingdate",width=100)
+        self.Railway_table.column("passengername",width=100)
+        self.Railway_table.column("age",width=100)
+        self.Railway_table.column("gender",width=100)
+        self.Railway_table.column("passengerid",width=100)
+        
+        
+        
+        self.fetch_data()
+         
+    def adda_data(self):
+        conn=mysql.connector.connect(host="localhost",user="root",password="poiuytrewq1@",database="railway_management_system")
+        my_cursor=conn.connect()
+        my_cursor.execute("insert into railmanage values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+                                                                         self.trainname_var.get(),
+                                                                         self.trainno_var.get(),
+                                                                         self.class_var.get(),
+                                                                         self.date_var.get(),
+                                                                         self.time_var.get(),
+                                                                         self.sourcestation_var.get(),
+                                                                         self.destinationstation_var.get(),
+                                                                         self.distance_var.get(),
+                                                                         self.quota_var.get(),
+                                                                         self.bookingdate_var.get(),
+                                                                         self.passengername_var.get(),
+                                                                         self.age_var.get(),
+                                                                         self.gender_var.get(),
+                                                                         self.passengerid_var.get()
+        ))                                                                     
+        conn.commit(),
+        self.fetch_data(),
+        conn.close()                                                                
+                                                                               
+        messagebox.showinfo("Success","Infromation has been inserted successfully")
+    
+    def fetch_data(self):
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",  # Change "username" to "user"
+            password="poiuytrewq1@",
+            database="railway_management_system"
+    )
+        my_cursor = conn.cursor()
+        my_cursor.execute("SELECT * FROM railmanage")
+        rows = my_cursor.fetchall()
+
+        if len(rows)!= 0:
+            self.Railway_table.delete(*self.Railway_table.get_children())
+            for row in rows:  # Changed "for in in rows" to "for row in rows"
+                 self.Railway_table.insert("", "end", values=row)  # Changed "i" to "row"
+            conn.commit()
+            conn.close()
+
+            
+    def new_method(self, DataFrameLeft):
+        lblTrain=Label(DataFrameLeft,bg="powder blue",text="Train Name",font=("times new roman",15,"bold"),padx=2,pady=6)
+        lblTrain.grid(row=0,column=0,sticky="w")
+        
+        
+        
+if __name__ == "__main__":
+    root = Tk()
+    obj = RailwayManagementSystem(root)
+    root.mainloop()
